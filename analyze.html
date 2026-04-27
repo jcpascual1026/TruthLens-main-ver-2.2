@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TruthLens — Analyze</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/analyze.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="theme-fade" id="theme-fade"></div>
+      <header class="site-header" id="site-header">
+        <div class="container header-inner">
+          <a href="index.html" class="site-brand">
+            <img src="assets/Logo.png" alt="TruthLens logo" />
+            <span>TruthLens</span>
+          </a>
+
+          <button
+            class="nav-toggle"
+            id="nav-toggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+          >
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+
+          <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="analyze.html" class="active">Analyze</a>
+            <a href="contacts.html">Contact</a>
+
+            <div class="theme-toggle-wrapper">
+              <button
+                class="theme-toggle"
+                id="theme-toggle"
+                aria-pressed="false"
+                aria-label="Toggle dark mode"
+              >
+                <i class="fa-solid fa-sun theme-icon sun"></i>
+                <i class="fa-solid fa-moon theme-icon moon"></i>
+
+                <span class="theme-pill"></span>
+              </button>
+            </div>
+          </nav>
+        </div>
+
+        <div class="nav-overlay" id="nav-overlay"></div>
+      </header>
+
+      <main>
+        <section class="analyze-hero">
+          <div class="container">
+            <h1>Analyze Content</h1>
+            <p>
+              Paste a URL, enter text, or upload an image to verify its
+              credibility using our AI engine.
+            </p>
+          </div>
+        </section>
+
+        <section class="analyze-workspace">
+          <div class="container workspace-flex">
+            <div class="input-panel">
+              <div class="input-tabs">
+                <button class="tab-btn active" data-tab="url">
+                  <i class="fa-solid fa-link"></i> URL
+                </button>
+                <button class="tab-btn" data-tab="text">
+                  <i class="fa-solid fa-keyboard"></i> Text
+                </button>
+                <button class="tab-btn" data-tab="image">
+                  <i class="fa-solid fa-image"></i> Image
+                </button>
+              </div>
+
+              <div class="tab-content active" id="tab-url">
+                <label for="url-input">Enter a news article URL</label>
+                <div class="input-row">
+                  <input
+                    type="url"
+                    id="url-input"
+                    placeholder="https://example.com/news-article"
+                  />
+                  <button class="button btn-primary">
+                    <i class="fa-solid fa-magnifying-glass"></i> Analyze
+                  </button>
+                </div>
+                <p class="input-hint">
+                  We will scan the source, metadata, and content for credibility
+                  signals.
+                </p>
+              </div>
+
+              <div class="tab-content" id="tab-text">
+                <label for="text-input">Paste article text to analyze</label>
+                <textarea
+                  id="text-input"
+                  rows="8"
+                  placeholder="Paste the news article or claim text here..."
+                ></textarea>
+                <button class="button btn-primary">
+                  <i class="fa-solid fa-magnifying-glass"></i> Analyze Text
+                </button>
+                <p class="input-hint">
+                  Our NLP models will detect bias, clickbait, and misleading
+                  language patterns.
+                </p>
+              </div>
+
+              <div class="tab-content" id="tab-image">
+                <label>Upload an image to verify</label>
+                <div class="upload-zone" id="upload-zone">
+                  <div class="upload-placeholder">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <p>
+                      Drag and drop an image here, or
+                      <span>click to browse</span>
+                    </p>
+                  </div>
+                  <div class="upload-preview" style="display: none">
+                    <img src="" alt="Preview" />
+                    <p class="filename"></p>
+                    <button type="button" class="remove-file">
+                      <i class="fa-solid fa-xmark"></i> Remove
+                    </button>
+                  </div>
+                  <input type="file" accept="image/*" hidden />
+                </div>
+                <button class="button btn-primary">
+                  <i class="fa-solid fa-magnifying-glass"></i> Verify Image
+                </button>
+                <p class="input-hint">
+                  We check for tampering, reverse image search, and metadata
+                  inconsistencies.
+                </p>
+              </div>
+            </div>
+
+            <div class="results-panel">
+              <div class="results-header">
+                <h2>Analysis Results</h2>
+              </div>
+
+              <div class="score-ring">
+                <svg viewBox="0 0 120 120">
+                  <circle class="track" cx="60" cy="60" r="52" />
+                  <circle
+                    class="progress"
+                    cx="60"
+                    cy="60"
+                    r="52"
+                    stroke-dasharray="327"
+                    stroke-dashoffset="327"
+                  />
+                </svg>
+                <div class="score-value">
+                  <span class="score-number">—</span>
+                  <span class="score-label">Awaiting input</span>
+                </div>
+              </div>
+
+              <div class="result-badges"></div>
+
+              <div class="breakdown">
+                <h4>Breakdown</h4>
+                <div class="breakdown-item">
+                  <span>Source Credibility</span>
+                  <div class="breakdown-bar">
+                    <div style="width: 0%"></div>
+                  </div>
+                  <span>—</span>
+                </div>
+                <div class="breakdown-item">
+                  <span>Language Neutrality</span>
+                  <div class="breakdown-bar">
+                    <div style="width: 0%"></div>
+                  </div>
+                  <span>—</span>
+                </div>
+                <div class="breakdown-item">
+                  <span>Factual Consistency</span>
+                  <div class="breakdown-bar">
+                    <div style="width: 0%"></div>
+                  </div>
+                  <span>—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="history-section">
+          <div class="container">
+            <div class="history-header-bar">
+              <h2>
+                <i class="fa-solid fa-clock-rotate-left"></i> Analysis History
+              </h2>
+              <button class="button btn-clear" id="clear-history">
+                <i class="fa-solid fa-trash"></i> Clear
+              </button>
+            </div>
+            <div class="history-list" id="history-list">
+              <!-- History items injected by JS -->
+            </div>
+            <div class="history-empty" id="history-empty" style="display: none">
+              <i class="fa-solid fa-clipboard-list"></i>
+              <p>No analyses yet. Run your first check above!</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <div class="footer-brand">
+            <a href="index.html" class="site-brand">
+              <img src="assets/Logo.png" alt="TruthLens logo" />
+              <span>TruthLens</span>
+            </a>
+            <p>Empowering truth through AI-driven verification.</p>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <a href="index.html">Home</a>
+            <a href="analyze.html">Analyze</a>
+            <a href="contacts.html">Contact</a>
+          </div>
+          <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p><i class="fa-solid fa-envelope"></i> TruthLens@gmail.com</p>
+            <p><i class="fa-solid fa-location-dot"></i> San Pablo, Laguna</p>
+            <div class="social-links">
+              <a href="" aria-label="Twitter"
+                ><i class="fa-brands fa-x-twitter"></i
+              ></a>
+              <a href="" aria-label="LinkedIn"
+                ><i class="fa-brands fa-linkedin-in"></i
+              ></a>
+              <a href="" aria-label="GitHub"
+                ><i class="fa-brands fa-github"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="container">
+            <p>&copy; 2025 TruthLens. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/analyze.js"></script>
+  </body>
+</html>
+
