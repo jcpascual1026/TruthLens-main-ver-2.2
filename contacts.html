@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TruthLens — Contact</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/contacts.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="theme-fade" id="theme-fade"></div>
+      <header class="site-header" id="site-header">
+        <div class="container header-inner">
+          <a href="index.html" class="site-brand">
+            <img src="assets/Logo.png" alt="TruthLens logo" />
+            <span>TruthLens</span>
+          </a>
+
+          <button
+            class="nav-toggle"
+            id="nav-toggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+          >
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+
+          <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="analyze.php">Analyze</a>
+            <a href="contacts.html" class="active">Contact</a>
+
+            <div class="theme-toggle-wrapper">
+              <button
+                class="theme-toggle"
+                id="theme-toggle"
+                aria-pressed="false"
+                aria-label="Toggle dark mode"
+              >
+                <i class="fa-solid fa-sun theme-icon sun"></i>
+                <i class="fa-solid fa-moon theme-icon moon"></i>
+
+                <span class="theme-pill"></span>
+              </button>
+            </div>
+          </nav>
+        </div>
+
+        <div class="nav-overlay" id="nav-overlay"></div>
+      </header>
+
+      <main>
+        <section class="contact-hero">
+          <div class="container">
+            <h1>Get in Touch</h1>
+            <p>
+              Have questions, feedback, or partnership inquiries? We would love
+              to hear from you.
+            </p>
+          </div>
+        </section>
+
+        <form action="https://formspree.io/f/mwvajbnd" method="POST">
+          <section class="contact-content">
+          <div class="container contact-flex">
+            <div class="contact-info-col">
+              <div class="info-card">
+                <div class="info-icon">
+                  <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="info-text">
+                  <h3>Email Us</h3>
+                  <p>TruthLens@gmail.com</p>
+                </div>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="info-text">
+                  <h3>Visit Us</h3>
+                  <p>San Pablo, Laguna</p>
+                </div>
+              </div>
+              <div class="info-card">
+                <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+                <div class="info-text">
+                  <h3>Response Time</h3>
+                  <p>Within 24 hours</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-form-card">
+              <h2>Send a Message</h2>
+              <div class="contact-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      placeholder="John"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="john@example.com"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="subject">Subject</label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="How can we help?"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    placeholder="Tell us more about your inquiry..."
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="button btn-primary">
+                  <i class="fa-solid fa-paper-plane"></i> Send Message
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </form>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <div class="footer-brand">
+            <a href="index.html" class="site-brand">
+              <img src="assets/Logo.png" alt="TruthLens logo" />
+              <span>TruthLens</span>
+            </a>
+            <p>Empowering truth through AI-driven verification.</p>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <a href="index.html">Home</a>
+            <a href="analyze.php">Analyze</a>
+            <a href="contacts.html">Contact</a>
+          </div>
+          <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p><i class="fa-solid fa-envelope"></i> TruthLens@gmail.com</p>
+            <p><i class="fa-solid fa-location-dot"></i> San Pablo, Laguna</p>
+            <div class="social-links">
+              <a href="" aria-label="Twitter"
+                ><i class="fa-brands fa-x-twitter"></i
+              ></a>
+              <a href="" aria-label="LinkedIn"
+                ><i class="fa-brands fa-linkedin-in"></i
+              ></a>
+              <a href="" aria-label="GitHub"
+                ><i class="fa-brands fa-github"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="container">
+            <p>&copy; 2025 TruthLens. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

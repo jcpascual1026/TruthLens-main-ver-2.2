@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TruthLens — Fake News Detection Platform</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="theme-fade" id="theme-fade"></div>
+      <header class="site-header" id="site-header">
+        <div class="container header-inner">
+          <a href="index.html" class="site-brand">
+            <img src="assets/Logo.png" alt="TruthLens logo" />
+            <span>TruthLens</span>
+          </a>
+
+          <button
+            class="nav-toggle"
+            id="nav-toggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+          >
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+
+          <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+            <a href="index.html" class="active">Home</a>
+            <a href="analyze.php">Analyze</a>
+            <a href="contacts.html">Contact</a>
+
+            <div class="theme-toggle-wrapper">
+              <button
+                class="theme-toggle"
+                id="theme-toggle"
+                aria-pressed="false"
+                aria-label="Toggle dark mode"
+              >
+                <i class="fa-solid fa-sun theme-icon sun"></i>
+                <i class="fa-solid fa-moon theme-icon moon"></i>
+
+                <span class="theme-pill"></span>
+              </button>
+            </div>
+          </nav>
+        </div>
+
+        <div class="nav-overlay" id="nav-overlay"></div>
+      </header>
+
+      <main>
+        <section class="hero-shell" id="home">
+          <div class="container hero-wrap">
+            <div class="hero-copy">
+              <h1>Discover the truth with confidence</h1>
+              <p>
+                AI-powered fake news detection platform that helps you verify
+                news credibility in seconds.
+              </p>
+              <div class="hero-actions">
+                <a href="analyze.php" class="button btn-primary"
+                  >Get Started</a
+                >
+                <a href="#about" class="button btn-secondary">Learn More</a>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <img src="assets/header.png" alt="TruthLens dashboard preview" />
+            </div>
+          </div>
+        </section>
+
+        <section class="about-section" id="about">
+          <div class="container about-card">
+            <div class="project-summary">
+              <h2>About the Project</h2>
+              <p>
+                TruthLens is a sophisticated, academic-grade fake news detection
+                platform. We leverage a unique blend of Neural Language
+                Processing (NLP) and deep learning models to perform source
+                verification analysis with hundreds of verified, academic data
+                sources, ensuring robust results.
+              </p>
+              <a href="analyze.php" class="button btn-secondary">Try It Now</a>
+            </div>
+            <div class="feature-list">
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-link"></i></div>
+                <div>
+                  <h3>URL Analysis</h3>
+                  <p>
+                    Analyze article source credibility and suspicious signals.
+                  </p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon">
+                  <i class="fa-solid fa-keyboard"></i>
+                </div>
+                <div>
+                  <h3>Text Detection</h3>
+                  <p>
+                    Detect emotional bias, clickbait, and misleading language.
+                  </p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon">
+                  <i class="fa-solid fa-image"></i>
+                </div>
+                <div>
+                  <h3>Image Verification</h3>
+                  <p>Check images for tampering, reuse, and metadata issues.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-star"></i></div>
+                <div>
+                  <h3>Confidence Scoring</h3>
+                  <p>Review confidence levels with clear evidence details.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="how-it-works" id="how-it-works">
+          <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps-grid">
+              <div class="step-card">
+                <div class="step-number">01</div>
+                <i class="fa-solid fa-globe"></i>
+                <h3>Input news URL, text, or image</h3>
+              </div>
+              <div class="step-card">
+                <div class="step-number">02</div>
+                <i class="fa-solid fa-robot"></i>
+                <h3>System analyzes using machine learning</h3>
+              </div>
+              <div class="step-card">
+                <div class="step-number">03</div>
+                <i class="fa-solid fa-chart-line"></i>
+                <h3>Results are generated</h3>
+              </div>
+              <div class="step-card">
+                <div class="step-number">04</div>
+                <i class="fa-solid fa-check"></i>
+                <h3>User receives a confidence score</h3>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="team-section" id="team">
+          <div class="container">
+            <h2>Meet the Developers</h2>
+            <div class="team-grid">
+              <div class="team-card">
+                <div class="avatar"></div>
+                <h3>Bacani</h3>
+                <p>UI/UX</p>
+              </div>
+              <div class="team-card">
+                <div class="avatar"></div>
+                <h3>Duran</h3>
+                <p>Front-End</p>
+              </div>
+              <div class="team-card">
+                <div class="avatar"></div>
+                <h3>Cañubas</h3>
+                <p>Data Base</p>
+              </div>
+              <div class="team-card">
+                <div class="avatar"></div>
+                <h3>Pascual</h3>
+                <p>Back-End</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer" id="contact">
+        <div class="container footer-inner">
+          <div class="footer-brand">
+            <a href="index.html" class="site-brand">
+              <img src="assets/Logo.png" alt="TruthLens logo" />
+              <span>TruthLens</span>
+            </a>
+            <p>Empowering truth through AI-driven verification.</p>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <a href="index.html">Home</a>
+            <a href="analyze.php">Analyze</a>
+            <a href="contacts.html">Contact</a>
+          </div>
+          <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p><i class="fa-solid fa-envelope"></i> TruthLens@gmail.com</p>
+            <p><i class="fa-solid fa-location-dot"></i> San Pablo, Laguna</p>
+            <div class="social-links">
+              <a href="" aria-label="Twitter"
+                ><i class="fa-brands fa-x-twitter"></i
+              ></a>
+              <a href="" aria-label="LinkedIn"
+                ><i class="fa-brands fa-linkedin-in"></i
+              ></a>
+              <a href="" aria-label="GitHub"
+                ><i class="fa-brands fa-github"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="container">
+            <p>&copy; 2025 TruthLens. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
