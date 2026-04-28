@@ -179,6 +179,30 @@ try {
     echo json_encode(['error' => 'Server error: ' . $e->getMessage()]);
 }
 
+function loadDomainConfig() {
+    $configPath = __DIR__ . '/trusted_domains.json';
+    if (!file_exists($configPath)) {
+        return ['trusted' => [], 'suspicious' => []];
+    }
+    $json = file_get_contents($configPath);
+    $config = json_decode($json, true);
+    return is_array($config) ? $config : ['trusted' => [], 'suspicious' => []];
+}
+
+function checkDomain($url) {
+    $config = loadDomainConfig();
+    $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');
+    $host = preg_replace('/^www\./', '', $host);
+    
+    if (in_array($host, $config['trusted'] ?? [], true)) {
+        return ['status' => 'trusted', 'reason' => 'This domain is from a well-known and trusted news source.'];
+    }
+    if (in_array($host, $config['suspicious'] ?? [], true)) {
+        return ['status' => 'suspicious', 'reason' => 'This domain is known for publishing unreliable or fake news.'];
+    }
+    return ['status' => 'unknown', 'reason' => 'This domain is not in our trusted or suspicious lists. Exercise caution.'];
+}
+
 /**
  * Perform analysis on content
  * TODO: Replace with your AI analysis engine
@@ -186,6 +210,18 @@ try {
 function performAnalysis($content, $type) {
     $verdict = ['real', 'fake', 'unclear'][mt_rand(0, 2)];
     $score = mt_rand(40, 95);
+    $domainInfo = null;
+    
+    if ($type === 'url') {
+        $domainInfo = checkDomain($content);
+        if ($domainInfo['status'] === 'trusted') {
+            $score = min(95, $score + 15);
+            $verdict = 'real';
+        } elseif ($domainInfo['status'] === 'suspicious') {
+            $score = max(40, $score - 20);
+            $verdict = 'fake';
+        }
+    }
     
     return [
         'verdict' => $verdict,
@@ -196,7 +232,8 @@ function performAnalysis($content, $type) {
             'type' => $type,
             'analyzed_at' => date('Y-m-d H:i:s'),
             'confidence_percent' => $score . '%'
-        ]
+        ],
+        'domain_info' => $domainInfo
     ];
 }
 
@@ -204,7 +241,7 @@ function performAnalysis($content, $type) {
  * Format response for frontend
  */
 function formatResponse($analysis, $db_result) {
-    return [
+    $response = [
         'result' => $analysis['verdict'] ?? 'unclear',
         'score' => $analysis['score'] ?? 0,
         'confidence' => $analysis['confidence'] ?? 0,
@@ -214,4 +251,11 @@ function formatResponse($analysis, $db_result) {
         'saved' => $db_result['status'] === 'success',
         'id' => $db_result['id'] ?? null
     ];
+    
+    if (!empty($analysis['domain_info'])) {
+        $response['domain_status'] = $analysis['domain_info']['status'];
+        $response['domain_reason'] = $analysis['domain_info']['reason'];
+    }
+    
+    return $response;
 }

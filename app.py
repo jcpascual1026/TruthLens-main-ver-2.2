@@ -1,3 +1,5 @@
+import json
+import os
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import joblib
@@ -15,18 +17,15 @@ from nltk.corpus import stopwords
 nltk.download('stopwords')
 stop_words = set(stopwords.words('english'))
 
-# Domain credibility lists
-trusted_domains = [
-    'bbc.com', 'bbc.co.uk', 'cnn.com', 'nytimes.com', 'reuters.com',
-    'apnews.com', 'theguardian.com', 'washingtonpost.com', 'foxnews.com',
-    'nbcnews.com', 'abcnews.go.com', 'cbsnews.com', 'usatoday.com',
-    'npr.org', 'pbs.org'
-]
+# Load domain credibility lists from JSON config
+config_path = os.path.join(os.path.dirname(__file__), 'trusted_domains.json')
+domain_config = {'trusted': [], 'suspicious': []}
+if os.path.exists(config_path):
+    with open(config_path, 'r', encoding='utf-8') as f:
+        domain_config = json.load(f)
 
-suspicious_domains = [
-    'fake-news-site.com', 'hoax-news.com', 'clickbait-central.com',
-    'sensational-news.org', 'unreliable-info.net'
-]
+trusted_domains = domain_config.get('trusted', [])
+suspicious_domains = domain_config.get('suspicious', [])
 
 def check_domain(domain):
     """
@@ -42,6 +41,54 @@ def check_domain(domain):
         return 'social_media', 'This is a social media platform. Content credibility depends on the source and poster.'
     else:
         return 'unknown', 'This domain is not in our trusted or suspicious lists. Exercise caution.'
+
+# Clickbait and sensational words
+clickbait_words = ['shocking', 'viral', 'secret', 'exposed', 'unbelievable', 'breaking', 'urgent', 'must see', 'you wont believe', 'scandal', 'conspiracy']
+
+def generate_detailed_reasons(result, confidence, important_words, domain_status, text):
+    """
+    Generate a list of detailed reasons for the classification.
+    """
+    reasons = []
+
+    # Confidence reason
+    if confidence >= 0.8:
+        reasons.append("High confidence in the classification based on text patterns.")
+    elif confidence >= 0.6:
+        reasons.append("Moderate confidence; the result is reasonably certain.")
+    else:
+        reasons.append("Low confidence; this content may not be clear news or the model is uncertain.")
+
+    # Domain reason
+    if domain_status == 'trusted':
+        reasons.append("The source domain is from a trusted news organization.")
+    elif domain_status == 'suspicious':
+        reasons.append("The source domain is known for unreliable or fake content.")
+    elif domain_status == 'social_media':
+        reasons.append("This is from a social media platform; credibility depends on the original poster.")
+    else:
+        reasons.append("The domain is unknown; exercise caution with unfamiliar sources.")
+
+    # Word-based reasons
+    clickbait_found = [word for word in important_words if word in clickbait_words]
+    if clickbait_found:
+        reasons.append(f"Contains sensational or clickbait words: {', '.join(clickbait_found)}.")
+
+    # Content type check
+    news_keywords = ['report', 'according', 'said', 'announced', 'government', 'president', 'minister', 'official', 'source']
+    news_count = sum(1 for word in text.split() if word.lower() in news_keywords)
+    if news_count < 2:
+        reasons.append("The content lacks typical news reporting keywords, suggesting it may not be factual news.")
+
+    # Result-specific
+    if result == 'FAKE':
+        reasons.append("Overall patterns indicate potential misinformation or biased content.")
+    elif result == 'REAL':
+        reasons.append("The content follows patterns of reliable, factual reporting.")
+    else:
+        reasons.append("Uncertainty suggests the content doesn't strongly match either category.")
+
+    return reasons
 
 def preprocess(text):
     """
@@ -164,12 +211,16 @@ def predict(data: dict):
     elif result == 'REAL':
         explanation += " The content appears balanced and from a reliable source."
 
+    # Detailed reasons
+    detailed_reasons = generate_detailed_reasons(result, confidence, important_words, domain_status, text)
+
     return {
         "result": result,
         "confidence": round(confidence, 2),
         "important_words": important_words,
         "domain_status": domain_status,
-        "explanation": explanation
+        "explanation": explanation,
+        "detailed_reasons": detailed_reasons
     }
 
 @app.post("/predict-image")
@@ -203,12 +254,16 @@ def predict_image(file: UploadFile = File(...)):
 
     explanation = f"Extracted text classified as {result} with {confidence:.2f} confidence."
 
+    # Detailed reasons
+    detailed_reasons = generate_detailed_reasons(result, confidence, important_words, None, text)
+
     return {
         "result": result,
         "confidence": round(confidence, 2),
         "important_words": important_words,
         "extracted_text": text[:500],  # Preview
-        "explanation": explanation
+        "explanation": explanation,
+        "detailed_reasons": detailed_reasons
     }
 
 @app.post("/check-domain")

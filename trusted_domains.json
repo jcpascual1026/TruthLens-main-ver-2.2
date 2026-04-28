@@ -1,0 +1,21 @@
+{
+  "trusted": [
+    "inquirer.net",
+    "philstar.com",
+    "abs-cbn.com",
+    "gmanetwork.com",
+    "rappler.com",
+    "manilatimes.net",
+    "mb.com.ph",
+    "bworldonline.com",
+    "pna.gov.ph",
+    "cnnphilippines.com"
+  ],
+  "suspicious": [
+    "pinoytrendingnews.net",
+    "du30newsinfo.com",
+    "okd2.com",
+    "newsmediaph.com",
+    "pinoyobserver.com"
+  ]
+}

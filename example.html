@@ -50,6 +50,13 @@
             if (data.explanation) {
                 html += `<p>Explanation: ${data.explanation}</p>`;
             }
+            if (data.detailed_reasons) {
+                html += `<h4>Detailed Reasons:</h4><ul>`;
+                data.detailed_reasons.forEach(reason => {
+                    html += `<li>${reason}</li>`;
+                });
+                html += `</ul>`;
+            }
             if (data.extracted_text) {
                 html += `<p>Extracted Text: ${data.extracted_text}</p>`;
             }

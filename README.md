@@ -68,12 +68,13 @@ Visit http://127.0.0.1:8000/docs for interactive API documentation.
 
 ### POST /predict
 - Input: `{"text": "news content"}` or `{"url": "https://example.com"}` or `{"image_url": "https://example.com/image.jpg"}`
-- Output: result, confidence, important_words, domain_status, explanation
+- Output: result, confidence, important_words, domain_status, explanation, **detailed_reasons** (list of specific factors)
 - Supports news websites and social media links
 
 ### POST /predict-image
 - Input: image file
-- Output: result, confidence, important_words, extracted_text, explanation
+- Output: result, confidence, important_words, extracted_text, explanation, **detailed_reasons**
+- Analyzes text extracted from images
 
 ### POST /check-domain
 - Input: `{"domain": "example.com"}`
