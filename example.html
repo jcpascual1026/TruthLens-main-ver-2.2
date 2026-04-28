@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detector</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, button { margin: 10px 0; padding: 10px; }
+        #result { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>Fake News Detection</h1>
+
+    <h2>Check Text</h2>
+    <textarea id="textInput" rows="4" cols="50" placeholder="Enter news text here..."></textarea><br>
+    <button onclick="checkText()">Check Text</button>
+
+    <h2>Check URL</h2>
+    <input type="url" id="urlInput" placeholder="Enter URL here (news or social media)..."><br>
+    <button onclick="checkURL()">Check URL</button>
+
+    <h2>Check Image URL</h2>
+    <input type="url" id="imageUrlInput" placeholder="Enter image URL here..."><br>
+    <button onclick="checkImageURL()">Check Image URL</button>
+
+    <h2>Check Image</h2>
+    <input type="file" id="imageInput" accept="image/*"><br>
+    <button onclick="checkImage()">Check Image</button>
+
+    <h2>Check Domain</h2>
+    <input type="text" id="domainInput" placeholder="Enter domain here..."><br>
+    <button onclick="checkDomain()">Check Domain</button>
+
+    <div id="result"></div>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:8000';
+
+        function displayResult(data) {
+            let html = `<h3>Result: ${data.result}</h3>`;
+            html += `<p>Confidence: ${data.confidence}</p>`;
+            if (data.important_words) {
+                html += `<p>Important Words: ${data.important_words.join(', ')}</p>`;
+            }
+            if (data.domain_status) {
+                html += `<p>Domain Status: ${data.domain_status}</p>`;
+            }
+            if (data.explanation) {
+                html += `<p>Explanation: ${data.explanation}</p>`;
+            }
+            if (data.extracted_text) {
+                html += `<p>Extracted Text: ${data.extracted_text}</p>`;
+            }
+            document.getElementById('result').innerHTML = html;
+        }
+
+        async function checkText() {
+            const text = document.getElementById('textInput').value;
+            if (!text) return alert('Enter text');
+            const response = await fetch(`${API_BASE}/predict`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
+            });
+            const data = await response.json();
+            displayResult(data);
+        }
+
+        async function checkURL() {
+            const url = document.getElementById('urlInput').value;
+            if (!url) return alert('Enter URL');
+            const response = await fetch(`${API_BASE}/predict`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url })
+            });
+            const data = await response.json();
+            displayResult(data);
+        }
+
+        async function checkImageURL() {
+            const imageUrl = document.getElementById('imageUrlInput').value;
+            if (!imageUrl) return alert('Enter image URL');
+            const response = await fetch(`${API_BASE}/predict`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image_url: imageUrl })
+            });
+            const data = await response.json();
+            displayResult(data);
+        }
+
+        async function checkImage() {
+            const file = document.getElementById('imageInput').files[0];
+            if (!file) return alert('Select image');
+            const formData = new FormData();
+            formData.append('file', file);
+            const response = await fetch(`${API_BASE}/predict-image`, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            displayResult(data);
+        }
+
+        async function checkDomain() {
+            const domain = document.getElementById('domainInput').value;
+            if (!domain) return alert('Enter domain');
+            const response = await fetch(`${API_BASE}/check-domain`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ domain })
+            });
+            const data = await response.json();
+            document.getElementById('result').innerHTML = `<h3>Domain Status: ${data.domain_status}</h3><p>${data.reason}</p>`;
+        }
+    </script>
+</body>
+</html>
