@@ -80,9 +80,29 @@ Visit http://127.0.0.1:8000/docs for interactive API documentation.
 - Input: `{"domain": "example.com"}`
 - Output: domain_status, reason
 
-## Frontend Integration Example
+## Frontend Integration
 
-See `example.html` for a simple JavaScript example.
+The `analyze.html` page integrates with the FastAPI backend via `process.php`. It displays:
+
+- Confidence score with visual ring
+- Result badges (Real/Fake/Uncertain)
+- Breakdown bars for Source Credibility, Language Neutrality, Factual Consistency
+- **Detailed reasons list** explaining why the result was reached
+
+To use the website:
+
+1. Start the API: `uvicorn app:app --reload`
+2. Start a PHP server in the project directory:
+   ```bash
+   php -S localhost:8080
+   ```
+3. Open `http://localhost:8080/analyze.html` in a browser
+4. Enter URL, text, or upload image
+5. View results with explanations
+
+**Note**: Opening `analyze.html` directly in the browser won't work because it needs the PHP backend. Use a local server.
+
+The website provides an intuitive interface for users to understand the AI's decision-making process.
 
 ## Notes
 

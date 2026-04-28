@@ -265,6 +265,19 @@ function updateResultsPanel(item) {
             spans[i].textContent = v + '%';
         });
     }
+
+    // Add detailed reasons section
+    const breakdown = document.querySelector('.breakdown');
+    const existingReasons = document.querySelector('.detailed-reasons');
+    if (existingReasons) existingReasons.remove();
+    if (breakdown && item.detailed_reasons) {
+        let reasonsHtml = '<ul class="detailed-reasons">';
+        item.detailed_reasons.forEach(reason => {
+            reasonsHtml += `<li>${reason}</li>`;
+        });
+        reasonsHtml += '</ul>';
+        breakdown.insertAdjacentHTML('afterend', reasonsHtml);
+    }
 }
 
 function renderHistory(list) {

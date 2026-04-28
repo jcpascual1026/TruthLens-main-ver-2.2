@@ -387,6 +387,31 @@
     transition: width 1s ease;
 }
 
+/* Detailed Reasons */
+.detailed-reasons {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+}
+
+.detailed-reasons li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.detailed-reasons li:last-child {
+    border-bottom: none;
+}
+
+.detailed-reasons li:before {
+    content: "•";
+    color: var(--primary);
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .workspace-flex {
