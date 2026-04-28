@@ -17,6 +17,16 @@ require_once 'config.php';
 function saveArticle($url, $text, $image_url = null, $image_blob = null) {
     global $conn;
     
+    // Check current count and clean up if needed
+    $count_result = $conn->query("SELECT COUNT(*) as count FROM articles");
+    if ($count_result) {
+        $count = $count_result->fetch_assoc()['count'];
+        if ($count >= 50) {
+            // Delete oldest articles to keep only 49 (to make room for the new one)
+            $conn->query("DELETE FROM articles ORDER BY created_at ASC LIMIT " . ($count - 49));
+        }
+    }
+    
     // Prepare statement to prevent SQL injection
     $stmt = $conn->prepare("INSERT INTO articles (url, text_content, image_url, image_blob) VALUES (?, ?, ?, ?)");
     
@@ -68,7 +78,7 @@ function getArticleById($id) {
 function getAllArticles() {
     global $conn;
     
-    $result = $conn->query("SELECT id, url, text_content, image_url, created_at FROM articles ORDER BY created_at DESC");
+    $result = $conn->query("SELECT id, url, text_content, image_url, created_at FROM articles ORDER BY created_at DESC LIMIT 50");
     
     if ($result->num_rows > 0) {
         return $result->fetch_all(MYSQLI_ASSOC);

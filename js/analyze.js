@@ -294,6 +294,13 @@ function renderHistory(list) {
 
     if (empty) empty.style.display = 'none';
 
+    // Add scroll class if more than 5 items
+    if (list.length > 5) {
+        container.classList.add('history-scroll');
+    } else {
+        container.classList.remove('history-scroll');
+    }
+
     const typeIcons = {
         url: 'fa-link',
         text: 'fa-keyboard',

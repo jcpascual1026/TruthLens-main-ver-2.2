@@ -493,6 +493,11 @@
     gap: 0.875rem;
 }
 
+.history-list.history-scroll {
+    max-height: 400px; /* Adjust based on 5 cards height */
+    overflow-y: auto;
+}
+
 .history-card {
     display: grid;
     grid-template-columns: auto 1fr auto auto;
